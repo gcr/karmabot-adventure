@@ -8,7 +8,7 @@
 module.exports = (robot) ->
   botname = process.env.HUBOT_SLACK_BOTNAME
 
-  robot.hear /@([a-z0-9_\-\.]+)\+{2,}/i, (msg) ->
+  robot.hear ///@([a-z0-9_\-\.]+)\+{2,}///i, (msg) ->
     user = msg.match[1].replace(/\-+$/g, '')
     if msg.message.user.name == user
       response_msg = "@" + user
@@ -18,8 +18,8 @@ module.exports = (robot) ->
       count = (robot.brain.get(user) or 0) + 1
       robot.brain.set user, count
       msg.send "@#{user}++ [woot! now at #{count}]"
-  
-  robot.hear /@([a-z0-9_\-\.]+)\-{2,}/i, (msg) ->
+
+  robot.hear ///@([a-z0-9_\-\.]+)\-{2,}///i, (msg) ->
     user = msg.match[1].replace(/\-+$/g, '')
     if msg.message.user.name == user
       response_msg = "@" + user
@@ -29,7 +29,7 @@ module.exports = (robot) ->
     robot.brain.set user, count
     msg.send "@#{user}-- [ouch! now at #{count}]"
 
-  robot.hear /// #{botname} \s+ leaderboard ///i, (msg) ->
+  robot.hear ///#{botname}\s+leaderboard///i, (msg) ->
     users = robot.brain.data._private
     tuples = []
     for username, score of users
