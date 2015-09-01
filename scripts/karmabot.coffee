@@ -49,11 +49,13 @@ module.exports = (robot) ->
 
     leaderboard_maxlen = 10
     str = ''
+    add_spaces = (m) -> m + "\u200A"
     for i in [0...Math.min(leaderboard_maxlen, tuples.length)]
       username = tuples[i][0]
       points = tuples[i][1]
       point_label = if points == 1 then "point" else "points"
-      leader = if i == 0 then "All hail supreme leader!" else ""
+      leader = if i == 0 then " (All hail supreme leader!)" else ""
       newline = if i < Math.min(leaderboard_maxlen, tuples.length) - 1 then '\n' else ''
-      str += "##{i+1} @#{username} [#{points} " + point_label + "] " + leader + newline
+      formatted_name = username.replace(/\S/g, add_spaces).trim()
+      str += "##{i+1}\t[#{points} " + point_label + "] #{formatted_name}" + leader + newline
     msg.send(str)
