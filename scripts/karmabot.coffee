@@ -51,8 +51,8 @@ module.exports = (robot) ->
       tuples = (item for item in tuples when item[1] < 0)
       tuples.reverse()
     requested_count = msg.match[2]
-    leaderboard_maxlen = if not requested_count? then 10
-      else if requested_count == "all" then tuples.length
+    leaderboard_maxlen = if not requested_count? then 10\
+      else if requested_count == "all" then tuples.length\
       else +requested_count
     str = ''
     add_spaces = (m) -> m + "\u200A"
