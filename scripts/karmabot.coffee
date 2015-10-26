@@ -29,7 +29,7 @@ module.exports = (robot) ->
     robot.brain.set user, count
     msg.send "@#{user}-- [ouch! now at #{count}]"
 
-  robot.hear ///#{botname}\s+leaderboard///i, (msg) ->
+  robot.hear ///#{botname}\s+(leader|shame)board\s+([0-9]+|all)///i, (msg) ->
     users = robot.brain.data._private
     tuples = []
     for username, score of users
@@ -39,15 +39,20 @@ module.exports = (robot) ->
       msg.send "The lack of karma is too damn high!"
       return
 
+    sort_operator = if msg.match[1] == "leader" then (a, b) -> a > b else (a, b) -> a < b
     tuples.sort (a, b) ->
-      if a[1] > b[1]
+      if sort_operator a[1], b[1]
         return -1
-      else if a[1] < b[1]
+      else if sort_operator a[1], b[1]
         return 1
       else
         return 0
-
-    leaderboard_maxlen = 10
+    
+    if msg[1] == "shame" then tuples = (item for item in tuples when item[1] < 0)
+    requested_count = msg.match[2]
+    leaderboard_maxlen = if not requested_count? then 10
+      else if requested_count == "all" then tuples.length
+      else +requested_count
     str = ''
     add_spaces = (m) -> m + "\u200A"
     for i in [0...Math.min(leaderboard_maxlen, tuples.length)]
