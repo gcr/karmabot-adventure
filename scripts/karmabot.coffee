@@ -39,16 +39,17 @@ module.exports = (robot) ->
       msg.send "The lack of karma is too damn high!"
       return
 
-    sort_operator = if msg.match[1] == "leader" then (a, b) -> a > b else (a, b) -> a < b
     tuples.sort (a, b) ->
-      if sort_operator a[1], b[1]
+      if a[1] > b[1]
         return -1
-      else if sort_operator a[1], b[1]
+      else if a[1] < b[1]
         return 1
       else
         return 0
     
-    if msg[1] == "shame" then tuples = (item for item in tuples when item[1] < 0)
+    if msg[1] == "shame"
+      tuples = (item for item in tuples when item[1] < 0)
+      tuples.reverse()
     requested_count = msg.match[2]
     leaderboard_maxlen = if not requested_count? then 10
       else if requested_count == "all" then tuples.length
