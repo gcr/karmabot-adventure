@@ -29,7 +29,7 @@ module.exports = (robot) ->
     robot.brain.set user, count
     msg.send "@#{user}-- [ouch! now at #{count}]"
 
-  robot.hear ///#{botname}\s+(leader|shame)board\s+([0-9]+|all)///i, (msg) ->
+  robot.hear ///#{botname}\s+(leader|shame)board\s*([0-9]+|all)///i, (msg) ->
     users = robot.brain.data._private
     tuples = []
     for username, score of users
