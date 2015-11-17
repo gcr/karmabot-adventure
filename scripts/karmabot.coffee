@@ -29,7 +29,7 @@ module.exports = (robot) ->
     robot.brain.set user, count
     msg.send "@#{user}-- [ouch! now at #{count}]"
 
-  robot.hear ///#{botname}\s+(leader|shame)board\s*([0-9]+|all)///i, (msg) ->
+  robot.hear ///#{botname}\s+(leader|shame)board\s*([0-9]+|all)?///i, (msg) ->
     users = robot.brain.data._private
     tuples = []
     for username, score of users
@@ -47,7 +47,7 @@ module.exports = (robot) ->
       else
         return 0
     
-    if msg[1] == "shame"
+    if msg.match[1] == "shame"
       tuples = (item for item in tuples when item[1] < 0)
       tuples.reverse()
     requested_count = msg.match[2]
