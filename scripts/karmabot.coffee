@@ -65,3 +65,8 @@ module.exports = (robot) ->
       formatted_name = username.replace(/\S/g, add_spaces).trim()
       str += "##{i+1}\t[#{points} " + point_label + "] #{formatted_name}" + leader + newline
     msg.send(str)
+
+  robot.hear ///#{botname}\s+karma\s+of\s+@([a-z0-9_\-\.]+)///i, (msg) ->
+        user = msg.match[1].replace(/\-+$/g, '')
+        count = robot.brain.get(user) or 0
+        msg.send "@#{user} has #{count} karma!"
