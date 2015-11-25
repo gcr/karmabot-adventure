@@ -10,7 +10,8 @@
     "hubot-heroku-keepalive": "0.0.4",
     "hubot-redis-brain": "0.0.2",
     "hubot-scripts": "^2.5.16",
-    "hubot-slack": "^3.3.0"
+    "hubot-slack": "^3.3.0",
+    "node-ansiparser": "^2.1.0"
   },
   "engines": {
     "node": "0.10.x"
