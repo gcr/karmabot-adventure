@@ -9,9 +9,9 @@ child_process = require 'child_process'
 ansiparser = require 'node-ansiparser'
 
 config = {
-  room_name: 'if-abcd12341234'
-  frotz_path: "/Users/michael/tmp/bocfel-0.6.3.2/bocfel"
-  frotz_cmd: ["/Users/michael/Downloads/Heliopause.zblorb"]
+  room_name: process.env.ROOM_NAME
+  frotz_path: "bocfel-0.6.3.2/bocfel"
+  frotz_cmd: [process.env.IF_FILE]
 }
 
 new_process = (cmd, argv, send) ->
@@ -99,4 +99,3 @@ module.exports = (robot) ->
     if msg.message.room != config.room_name
       return
     adventure msg.match[1]
-
